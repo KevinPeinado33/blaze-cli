@@ -10,7 +10,12 @@ export const TableProducts = ({ products, onClick, type }) => {
                 <tr>
                     <th>Name</th>
                     <th>Price</th>
-                    <th>Action</th>
+                    {
+                        ( type === 'Delete' )
+                            ? <th>Quantity</th>
+                            : null
+                    }
+                    <th>Action</th>                    
                 </tr>
             </thead>
             <tbody>

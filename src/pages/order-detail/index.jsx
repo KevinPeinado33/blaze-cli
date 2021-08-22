@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Button } from 'react-bootstrap';
-import { useParams } from "react-router-dom";
 
 import { format } from '../../utils/formatDate';
 import { ListProducts } from './components/ListProducts';
@@ -10,7 +9,7 @@ import { CardInfoOrder } from './components/CardInfoOrder';
 
 const OrderDetailPage = ({ history }) => {
 
-    const { id } = useParams();
+    /* const { id } = useParams(); */
 
     const { order } = history.location.state;
 
@@ -33,7 +32,7 @@ const OrderDetailPage = ({ history }) => {
             <h5 className="mb-4">Status: {status}</h5>
             <h5 className="mb-4">Date: {format(date)}</h5>
 
-            <ListProducts products={order.products} />
+            <ListProducts orderDetails={order.orderDetails} />
             <CardInfoOrder order={order} />
 
         </>

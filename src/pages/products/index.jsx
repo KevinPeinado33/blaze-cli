@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import { Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import { AlertMsg } from '../../components/AlertMsg';
 import { CreateProduct } from './components/CreateProduct';
 import { ListProducts } from './components/ListProducts';
 
 import { downloadProductsAction } from '../../stateManagement/actions/productsAction';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Loading } from '../../components/Loading';
 
 const ProductsPage = () => {
 
@@ -41,6 +43,8 @@ const ProductsPage = () => {
 
     const data = searchItem !== "" ? filterData : products;
 
+    const { loading } = useSelector(state => state.products );
+
     return (
         <>
             <h3>Products</h3>
@@ -61,6 +65,8 @@ const ProductsPage = () => {
             }
 
             <CreateProduct show={show} handleClose={handleClose} />
+
+            <Loading isVisible={loading ? 'loading' : ''} />
 
         </>
     )

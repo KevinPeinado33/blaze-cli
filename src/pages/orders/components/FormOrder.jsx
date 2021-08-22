@@ -7,7 +7,7 @@ export const FormOrder = ({ form, onChange, activeProducts }) => {
 
     const { consumer } = form;
 
-    const [products, setProducts] = useState(activeProducts);
+    const [products] = useState(activeProducts);
     const [productsInCar, setProductsInCar] = useState([]);
 
     // eslint-disable-next-line 
@@ -20,21 +20,38 @@ export const FormOrder = ({ form, onChange, activeProducts }) => {
     
     const addProducts = id => {
 
-        setProducts(products.filter(product => product._id !== id));
-
         const newProducto = products.findIndex(product => product._id === id);
 
-        setProductsInCar([...productsInCar, products[newProducto]]);
+        if ( productsInCar.includes(products[newProducto]) === true && products[newProducto].quantity !== undefined ) {
+
+            products[newProducto].quantity = products[newProducto].quantity + 1;
+
+            setProductsInCar(productsInCar.map( product => product._id === id ? product = products[newProducto]: product ));
+
+        }  else {
+
+            products[newProducto].quantity = 1;
+            
+            setProductsInCar([...productsInCar, products[newProducto]]);
+
+        }
                 
     }
     
     const deleteProducts = id => {
         
-        setProductsInCar(productsInCar.filter(product => product._id !== id));
+        const delProduct = productsInCar.findIndex(product => product._id === id);
+
+        if ( productsInCar[delProduct].quantity === 1 ){
+            
+            setProductsInCar(productsInCar.filter(product => product._id !== id));
         
-        const newProducto = productsInCar.findIndex(product => product._id === id);
-        
-        setProducts([...products, productsInCar[newProducto]]);
+        } else {
+
+            productsInCar[delProduct].quantity = productsInCar[delProduct].quantity - 1;
+
+            setProductsInCar(productsInCar.map( product => product._id === id ? product = productsInCar[delProduct]: product ));
+        }
 
     }
 

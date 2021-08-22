@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { downloadOrdersAction }from '../../stateManagement/actions/ordersAction';
 
 import { getProductByState } from '../../stateManagement/actions/productsAction';
+import { Loading } from '../../components/Loading';
 
 const OrdersPage = () => {
 
@@ -27,6 +28,8 @@ const OrdersPage = () => {
     }, []);
     
     const { orders } = useSelector( state => state.orders );
+
+    const { loading } = useSelector( state => state.orders );
     
     const handleClose = () => setShow(false);
     
@@ -40,6 +43,7 @@ const OrdersPage = () => {
 
         handleShow();
     }
+
 
     return (
         <>
@@ -61,6 +65,9 @@ const OrdersPage = () => {
             }
 
             <CreateOrder show={show} handleClose={handleClose} activeProducts={activeProducts} />
+
+
+            <Loading isVisible={ loading ? 'loading' : ''} />
 
         </>
     )

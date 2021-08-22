@@ -3,7 +3,11 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import { Product } from './Product';
 
-export const ListProducts = ({ products }) => {
+export const ListProducts = ({ orderDetails }) => {
+
+    // clean and build new array
+    delete orderDetails._id;
+
     return (
         <Table striped bordered hover >
             <thead>
@@ -18,8 +22,8 @@ export const ListProducts = ({ products }) => {
             </thead>
             <tbody>
                 {
-                    products.map( (product, index) => 
-                        <Product key={product._id} product={product} index={index} />
+                    orderDetails.map( (orderDetail, index) => 
+                        <Product key={orderDetail.product._id} orderDetail={orderDetail} index={index} />
                     )
                 }
             </tbody>
