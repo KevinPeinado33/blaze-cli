@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Table } from 'react-bootstrap';
-import { Pagination } from '../../products/components/Pagination';
+import { Pagination } from '../../../components/Pagination';
 import { Order } from './Order';
 
 export const ListOrders = ({ orders, setSearchItem }) => {

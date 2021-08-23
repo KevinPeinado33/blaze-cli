@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Table, Form } from 'react-bootstrap'
-import { Pagination } from './Pagination';
+import { Pagination } from '../../../components/Pagination';
 import { Product } from './Product'
 
 export const ListProducts = ({ products, setSearchItem }) => {
