@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import { Form, Row, Col } from 'react-bootstrap';
-import { TableProducts } from './TableProducts';
+import { TableProducts } from '../../orders/components/TableProducts';
 
-export const FormOrder = ({ form, onChange, activeProducts }) => {
+export const FormOrder = ({ form, onChange, activeProducts, productsPurchased }) => {
 
     const { consumer } = form;
 
     const [products] = useState(activeProducts);
-    const [productsInCar, setProductsInCar] = useState([]);
+    const [productsInCar, setProductsInCar] = useState(productsPurchased);
 
     // eslint-disable-next-line 
     useEffect( async () => {
@@ -22,9 +22,11 @@ export const FormOrder = ({ form, onChange, activeProducts }) => {
 
         const newProducto = products.findIndex(product => product._id === id);
 
-        if ( productsInCar.includes(products[newProducto]) === true && products[newProducto].quantity !== undefined ) {
+        if ( productsInCar.findIndex( p => p._id === id ) >= 0 ) {
 
-            products[newProducto].quantity = products[newProducto].quantity + 1;
+            const u = productsInCar.findIndex( p => p._id === id );
+
+            products[newProducto].quantity = productsInCar[u].quantity + 1;
 
             setProductsInCar(productsInCar.map( product => product._id === id ? product = products[newProducto]: product ));
 
