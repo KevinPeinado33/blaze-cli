@@ -35,9 +35,6 @@ export const EditProduct = ({ show, handleClose, product }) => {
         // send create a product
         dispatch( editProductAction( form ) );
 
-        // restart state initial
-        setForm({ name: '', category: '', price: 0, state: 'Active'});
-
         // close modal
         handleClose();
 

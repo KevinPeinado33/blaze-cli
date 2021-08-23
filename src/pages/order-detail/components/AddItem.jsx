@@ -35,9 +35,6 @@ export const AddItem = ({ show, handleClose, activeProducts, order, productsPurc
         // send data for save
         dispatch( updateOrderAction( form ) );
 
-        // restart state initial
-        setForm({ _id: '', consumer: '', products: [ ]});
-
         // close modal
         handleClose(); 
 
