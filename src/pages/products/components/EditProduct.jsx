@@ -65,7 +65,7 @@ export const EditProduct = ({ show, handleClose, product }) => {
                 </Button>
                 <Button 
                     variant="primary"
-                    onClick={saveProduct}>Save</Button>
+                    onClick={saveProduct}>Save change</Button>
             </Modal.Footer>
 
         </Modal >

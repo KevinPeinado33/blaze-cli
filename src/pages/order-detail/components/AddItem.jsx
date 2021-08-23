@@ -50,7 +50,7 @@ export const AddItem = ({ show, handleClose, activeProducts, order, productsPurc
         >
 
             <Modal.Header closeButton>
-                <Modal.Title>New order { form.consumer !== '' ? `for ${form.consumer}` : ''}</Modal.Title>
+                <Modal.Title>Order update { form.consumer !== '' ? `for ${form.consumer}` : ''}</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -66,7 +66,7 @@ export const AddItem = ({ show, handleClose, activeProducts, order, productsPurc
                 <Button
                     variant="primary"
                     onClick={saveOrder}>
-                    Save
+                    Save change
                 </Button>
             </Modal.Footer>
 
