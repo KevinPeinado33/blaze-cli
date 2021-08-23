@@ -1,10 +1,29 @@
-import { Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Table } from 'react-bootstrap';
+import { Pagination } from '../../products/components/Pagination';
 import { Order } from './Order';
 
-export const ListOrders = ({ orders }) => {
+export const ListOrders = ({ orders, setSearchItem }) => {
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productPerPage] = useState(5);
+
+    const indexOfLastProduct = currentPage * productPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+
+    const currentOrder = orders.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
-        <div style={{marginTop: 75}}>
+        <div style={{ marginTop: 80 }}>
+
+            <Form.Control
+                type="text"
+                placeholder="Search by consumer..."
+                style={{ width: '460px', float: 'right', marginBottom: 20 }}
+                onChange={({ target }) => setSearchItem(target.value)} />
+
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -18,16 +37,21 @@ export const ListOrders = ({ orders }) => {
                 </thead>
                 <tbody>
                     {
-                        orders.map((order, index) => 
+                        currentOrder.map((order, index) =>
                             <Order
                                 key={order._id}
                                 index={index}
                                 order={order}
-                            />    
+                            />
                         )
                     }
                 </tbody>
             </Table>
+            <Pagination
+                productPerPage={productPerPage} 
+                totalProducts={ orders.length } 
+                paginate={paginate}
+            />
         </div>
     )
 }

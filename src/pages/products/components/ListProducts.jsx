@@ -14,7 +14,7 @@ export const ListProducts = ({ products, setSearchItem }) => {
 
     const currentProduct = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    const paginate = pageNumber => setCurrentPage(pageNumber)
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div style={{ marginTop: 80 }}>
@@ -47,7 +47,10 @@ export const ListProducts = ({ products, setSearchItem }) => {
                     }
                 </tbody>
             </Table>
-            <Pagination productPerPage={productPerPage} totalProducts={ products.length } paginate={paginate}/>
+            <Pagination 
+                productPerPage={productPerPage} 
+                totalProducts={ products.length } 
+                paginate={paginate}/>
         </div>
     )
 }

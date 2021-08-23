@@ -19,11 +19,15 @@ const OrdersPage = () => {
     const dispatch = useDispatch();
 
     const [ show, setShow ] = useState( false );   
-    const [ activeProducts, setActiveProducts ] = useState([]);
-
+    
     const { orders } = useSelector( state => state.orders );
     const { loading } = useSelector( state => state.orders );
+    
+    const [ activeProducts, setActiveProducts ] = useState([]);
 
+    const [filterData, setFilterData] = useState(orders);
+    const [searchItem, setSearchItem] = useState('');
+    
     useEffect(() => {
 
         if ( orders.length === 0 ){
@@ -31,9 +35,13 @@ const OrdersPage = () => {
             dispatch( downloadOrdersAction() );        
         
         }
+
+        const results = orders.filter( order => order.consumer.toLowerCase().includes(searchItem.toLowerCase()) );
+        
+        setFilterData(results);
         
         // eslint-disable-next-line 
-    }, []);
+    }, [orders, searchItem]);
     
     const handleClose = () => setShow(false);
     
@@ -48,6 +56,7 @@ const OrdersPage = () => {
         handleShow();
     }
 
+    const data = searchItem !== "" ? filterData : orders;
 
     return (
         <>
@@ -65,7 +74,7 @@ const OrdersPage = () => {
                 (orders.length === 0)
 
                 ? <AlertMsg variant='warning' msg='No data in data base' />
-                : <ListOrders orders={orders} />
+                : <ListOrders orders={data} setSearchItem={setSearchItem} />
             }
 
             <CreateOrder show={show} handleClose={handleClose} activeProducts={activeProducts} />
