@@ -2,9 +2,24 @@ import React from 'react';
 
 import { Button, Card } from 'react-bootstrap';
 
+import { useDispatch } from 'react-redux';
+
+import { updateOrderAction } from '../../../stateManagement/actions/ordersAction';
+
 export const CardInfoOrder = ({ order }) => {
 
-    const { subTotal, totalCityTax, totalCountyTax, totalStateTax, totalFederalTax, totalTaxes, totalAmount } = order;
+
+    const dispatch = useDispatch();
+
+    const { _id, subTotal, totalCityTax, totalCountyTax, totalStateTax, totalFederalTax, totalTaxes, totalAmount } = order;
+
+    const updateStatusOrder = ( _id, status ) => {
+
+        const orderToUpdate = { _id, status };
+
+        dispatch( updateOrderAction(orderToUpdate) );
+
+    }
 
     return (
         <Card style={{ width: 450, float: 'right' }}>
@@ -39,8 +54,17 @@ export const CardInfoOrder = ({ order }) => {
                     <strong className="mt-2">Total </strong><span className="right-taxes">${totalAmount}</span>
                 </Card.Text>
 
-                <Button variant="success">Complete Order</Button>
-                <Button variant="danger" style={{ float: 'right' }}>Reject Order</Button>
+                <Button 
+                    onClick={() => updateStatusOrder(_id, 'Completed')}
+                    variant="success">
+                    Complete Order
+                </Button>
+                <Button 
+                    onClick={() => updateStatusOrder(_id, 'Rejected')}
+                    variant="danger" 
+                    style={{ float: 'right' }}>
+                    Reject Order
+                </Button>
             </Card.Body>
         </Card>
     )

@@ -20,16 +20,19 @@ const OrdersPage = () => {
     const [ show, setShow ] = useState( false );   
     const [ activeProducts, setActiveProducts ] = useState([]);
 
+    const { orders } = useSelector( state => state.orders );
+    const { loading } = useSelector( state => state.orders );
+
     useEffect(() => {
 
-        dispatch( downloadOrdersAction() );        
+        if ( orders.length === 0 ){
+
+            dispatch( downloadOrdersAction() );        
+        
+        }
         
         // eslint-disable-next-line 
     }, []);
-    
-    const { orders } = useSelector( state => state.orders );
-
-    const { loading } = useSelector( state => state.orders );
     
     const handleClose = () => setShow(false);
     

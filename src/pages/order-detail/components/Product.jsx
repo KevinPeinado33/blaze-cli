@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button } from 'react-bootstrap';
 
-export const Product = ({ orderDetail, index }) => {
+export const Product = ({ orderDetail, index, deleteDetail }) => {
     return (
         <tr>
             <td>{ index + 1 }</td>
@@ -11,7 +11,9 @@ export const Product = ({ orderDetail, index }) => {
             <td>{ orderDetail.product.price }</td>
             <td>{ orderDetail.cost }</td>
             <td>
-                <Button variant='link'>
+                <Button 
+                    onClick={() => deleteDetail(orderDetail._id)}
+                    variant='link'>
                     Delete
                 </Button>
             </td>

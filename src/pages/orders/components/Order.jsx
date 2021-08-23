@@ -44,7 +44,7 @@ export const Order = ({ order, index }) => {
             <td>{ format (order.date) }</td>
             <td>{ order.totalAmount }</td>
             <td>
-                <Button variant="link" onClick={() => history.push({pathname: `/orders/${order._id}`, state: {order}})}>
+                <Button variant="link" onClick={() => history.push(`/orders/${order._id}`)}>
                     Edit
                 </Button>
                 &nbsp;

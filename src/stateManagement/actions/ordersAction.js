@@ -7,7 +7,10 @@ import {
     DOWNLOAD_ORDER_ERROR,
     DELETE_ORDER,
     DELETE_ORDER_SUCCESS,
-    DELETE_ORDER_ERROR
+    DELETE_ORDER_ERROR,
+    UPDATE_ORDER,
+    UPDATE_ORDER_SUCCESS,
+    UPDATE_ORDER_ERROR
 } from '../types/ordersType';
 
 import { confApi } from '../../config/axiosConfig';
@@ -157,5 +160,62 @@ const deleteOrderSuccess = idOrder => ({
 
 const deleteOrderError = error => ({
     type: DELETE_ORDER_ERROR,
+    payload: error
+});
+
+
+/**
+ * Action for update order status or detail
+ * @param {*} order 
+ * @returns 
+ */
+export const updateOrderAction = order => {
+
+    return async dispatch => {
+
+        dispatch( updateOrder() );
+        
+        try {
+
+            const response = await confApi.put('/orders/update-order', order);
+
+            if ( response.status === 201 ) {
+
+                dispatch( updateOrderSuccess( response.data.order ) );
+                
+                Swal.fire(
+                    'Modified!',
+                    response.data.mesage,
+                    'success'
+                );
+
+            } else {
+                
+                dispatch( updateOrderError('Error while trying to update the order.'));
+
+            }
+
+            
+        } catch ( error ) {
+
+            dispatch( updateOrderError( error ) );
+            
+        }
+
+    }
+
+}
+
+const updateOrder = () => ({
+    type: UPDATE_ORDER
+});
+
+const updateOrderSuccess = order => ({
+    type: UPDATE_ORDER_SUCCESS,
+    payload: order
+});
+
+const updateOrderError = error => ({
+    type: UPDATE_ORDER_ERROR,
     payload: error
 });

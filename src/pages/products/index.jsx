@@ -14,36 +14,33 @@ const ProductsPage = () => {
 
     const dispatch = useDispatch();
 
-    const [show, setShow] = useState(false);
+    const { products } = useSelector(state => state.products);
+    const { loading } = useSelector(state => state.products );
 
+    const [show, setShow] = useState(false);
+    const [filterData, setFilterData] = useState(products);
+    const [searchItem, setSearchItem] = useState('');
     
     useEffect(() => {
         
-        dispatch(downloadProductsAction());
+        if ( products.length === 0 ) {
+            
+            dispatch( downloadProductsAction() );
+            
+        }
+        
+        const results = products.filter( product => product.name.toLowerCase().includes(searchItem.toLowerCase()) );
+        
+        setFilterData(results);
         
         // eslint-disable-next-line 
-    }, []);
-    
-    const { products } = useSelector(state => state.products);
-    
-    const [filterData, setFilterData] = useState(products);
-    const [searchItem, setSearchItem] = useState('');
+    }, [products, searchItem]);    
 
     const handleClose = () => setShow(false);
 
     const handleShow = () => setShow(true);
 
-    useEffect(() => {
-
-        const results = products.filter( product => product.name.toLowerCase().includes(searchItem.toLowerCase()) );
-    
-        setFilterData(results);
-
-    }, [products, searchItem]);
-
     const data = searchItem !== "" ? filterData : products;
-
-    const { loading } = useSelector(state => state.products );
 
     return (
         <>

@@ -174,7 +174,7 @@ export const editProductAction = product => {
 
             const response = await confApi.put('/products/update', product);
 
-            if ( response.status === 201 ){
+            if ( response.status === 201 ) {
                 
                 dispatch( editProductSuccess( response.data.product ) );
 

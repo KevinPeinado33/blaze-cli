@@ -6,14 +6,24 @@ import { format } from '../../utils/formatDate';
 import { ListProducts } from './components/ListProducts';
 
 import { CardInfoOrder } from './components/CardInfoOrder';
+import { Loading } from '../../components/Loading';
 
-const OrderDetailPage = ({ history }) => {
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 
-    /* const { id } = useParams(); */
+const OrderDetailPage = ( ) => {
 
-    const { order } = history.location.state;
+    const { id } = useParams();
+
+    const history =  useHistory();
+
+    const { orders } = useSelector( state => state.orders );
+    const { loading } = useSelector( state => state.orders );
+
+    const order = orders[orders.findIndex(product => product._id === id)];
 
     const { numOrder, consumer, status, date } = order;
+
 
     return (
         <>
@@ -24,7 +34,7 @@ const OrderDetailPage = ({ history }) => {
                 <Button 
                     variant='dark' 
                     size='lg'
-                    onClick={() => window.history.back()}>Back</Button>
+                    onClick={() => history.push('/orders')}>Back</Button>
 
             </div>
 
@@ -32,9 +42,10 @@ const OrderDetailPage = ({ history }) => {
             <h5 className="mb-4">Status: {status}</h5>
             <h5 className="mb-4">Date: {format(date)}</h5>
 
-            <ListProducts orderDetails={order.orderDetails} />
+            <ListProducts orderDetails={order.orderDetails} _id={id} />
             <CardInfoOrder order={order} />
 
+            <Loading isVisible={loading ? 'loading' : ''} />
         </>
     )
 }

@@ -3,10 +3,33 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import { Product } from './Product';
 
-export const ListProducts = ({ orderDetails }) => {
 
-    // clean and build new array
-    delete orderDetails._id;
+import { useDispatch } from 'react-redux';
+
+import { updateOrderAction } from '../../../stateManagement/actions/ordersAction';
+
+export const ListProducts = ({ orderDetails, _id }) => {
+
+    const dispatch =  useDispatch();
+
+    const deleteDetail = idDetalle => {
+
+        const positionDetalle = orderDetails.findIndex( detail => detail._id = idDetalle );
+        
+        orderDetails.splice(positionDetalle, 1);
+
+        const products = [];
+
+        // eslint-disable-next-line 
+        orderDetails.map( detail => {
+            products.push({_id: detail.product._id, quantity: detail.quantity});
+        });
+
+        const newDetail = { _id, products };
+
+        dispatch( updateOrderAction(newDetail) );
+        
+    }
 
     return (
         <Table striped bordered hover >
@@ -23,7 +46,11 @@ export const ListProducts = ({ orderDetails }) => {
             <tbody>
                 {
                     orderDetails.map( (orderDetail, index) => 
-                        <Product key={orderDetail.product._id} orderDetail={orderDetail} index={index} />
+                        <Product 
+                            key={orderDetail.product._id} 
+                            orderDetail={orderDetail} 
+                            deleteDetail={deleteDetail}
+                            index={index} />
                     )
                 }
             </tbody>

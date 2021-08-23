@@ -7,7 +7,10 @@ import {
     DOWNLOAD_ORDER_ERROR,
     DELETE_ORDER,
     DELETE_ORDER_SUCCESS,
-    DELETE_ORDER_ERROR    
+    DELETE_ORDER_ERROR,
+    UPDATE_ORDER,
+    UPDATE_ORDER_SUCCESS,
+    UPDATE_ORDER_ERROR
 } from '../types/ordersType';
 
 const initialState = {
@@ -21,6 +24,7 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
+        case UPDATE_ORDER:
         case DELETE_ORDER:
         case CREATE_ORDER:
         case DOWNLOAD_ORDER:
@@ -49,7 +53,15 @@ export default (state = initialState, action) => {
                 loading: false,
                 orders: state.orders.filter( order => order._id !== action.payload )
             }
+
+        case UPDATE_ORDER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                orders: state.orders.map( order => order._id === action.payload._id ? order = action.payload : order )
+            }
         
+        case UPDATE_ORDER_ERROR:
         case DELETE_ORDER_ERROR:
         case CREATE_ORDER_ERROR:
         case DOWNLOAD_ORDER_ERROR:
